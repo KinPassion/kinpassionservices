@@ -63,3 +63,18 @@ footer {
   color: white;
   margin-top: 2rem;
 }
+.whatsapp-btn {
+  display: inline-block;
+  margin-top: 8px;
+  background-color: #25D366;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+
+.whatsapp-btn:hover {
+  background-color: #1da851;
+}
