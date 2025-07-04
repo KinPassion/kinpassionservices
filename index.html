@@ -1,30 +1,502 @@
 <!DOCTYPE html>
+
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kin Passion Services  - Accueil</title>
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Cœur Connecté - Agence de Rencontres Exclusives</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1a0a2e, #4a154b, #9d2235);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+        
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            padding: 40px 0 20px;
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.8rem;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 15px;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+        }
+        
+        .logo::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff69b4, transparent);
+        }
+        
+        .tagline {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            margin-top: 15px;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.85);
+        }
+        
+        /* Main Content Styles */
+        .content {
+            padding: 40px 0;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .transparent-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 30px 0;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+        
+        .transparent-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(157, 34, 53, 0.4);
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.4rem;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, #ff69b4, #ff9ec5);
+        }
+        
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .highlight {
+            color: #ff9ec5;
+            font-weight: 500;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin: 40px 0 30px;
+        }
+        
+        .feature {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 30px 25px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 15px;
+            transition: all 0.4s ease;
+            border: 1px solid rgba(255, 158, 197, 0.2);
+        }
+        
+        .feature:hover {
+            background: rgba(157, 34, 53, 0.3);
+            transform: translateY(-8px);
+            border-color: rgba(255, 158, 197, 0.4);
+        }
+        
+        .feature i {
+            font-size: 3.2rem;
+            color: #ff69b4;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+        }
+        
+        .feature h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #ff9ec5;
+        }
+        
+        .feature p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin: 50px 0 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            min-width: 150px;
+        }
+        
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #ff69b4;
+            text-shadow: 0 0 10px rgba(255, 105, 180, 0.4);
+            line-height: 1;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            opacity: 0.85;
+        }
+        
+        /* Catalogue Button */
+        .catalogue-section {
+            margin: 60px 0 40px;
+            text-align: center;
+        }
+        
+        .catalogue-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+        }
+        
+        .catalogue-subtitle {
+            font-size: 1.2rem;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+        
+        .catalogue-btn-container {
+            display: inline-block;
+            position: relative;
+            z-index: 10;
+            margin-top: 20px;
+        }
+        
+        .catalogue-btn {
+            background: linear-gradient(45deg, #ff69b4, #ff4381);
+            color: white;
+            border: none;
+            padding: 22px 60px;
+            font-size: 1.4rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 25px rgba(157, 34, 53, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+        }
+        
+        .catalogue-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .catalogue-btn:hover {
+            transform: translateY(-7px) scale(1.05);
+            box-shadow: 0 15px 35px rgba(157, 34, 53, 0.7);
+        }
+        
+        .catalogue-btn:hover::before {
+            left: 100%;
+        }
+        
+        .catalogue-btn i {
+            font-size: 1.6rem;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 0 30px;
+            font-size: 0.95rem;
+            opacity: 0.8;
+            position: relative;
+            z-index: 5;
+            border-top: 1px solid rgba(255, 158, 197, 0.2);
+            margin-top: 30px;
+        }
+        
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .contact-item i {
+            color: #ff69b4;
+        }
+        
+        /* Hearts Animation */
+        .hearts {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .heart {
+            position: absolute;
+            display: block;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 105, 180, 0.7);
+            box-shadow: 0 0 15px rgba(255, 105, 180, 0.5);
+            border-radius: 50%;
+            animation: animate 6s linear infinite;
+        }
+        
+        .heart::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 105, 180, 0.7);
+            border-radius: 50%;
+        }
+        
+        .heart::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -10px;
+            width: 20px;
+            height: 20px;
+            background: rgba(255, 105, 180, 0.7);
+            border-radius: 50%;
+        }
+        
+        @keyframes animate {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .logo {
+                font-size: 2.8rem;
+            }
+            
+            .tagline {
+                font-size: 1.1rem;
+            }
+            
+            .transparent-card {
+                padding: 25px 20px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .features {
+                flex-direction: column;
+            }
+            
+            .catalogue-btn {
+                padding: 18px 45px;
+                font-size: 1.2rem;
+            }
+            
+            .stat-item {
+                min-width: 120px;
+            }
+            
+            .stat-number {
+                font-size: 2.8rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>❤️ Kin Passion Services </h1>
-    <nav>
-      <a href="catalogue.html" class="btn">Voir le catalogue</a>
-      <a href="index.html">Accueil</a>
-      <a href="register.html">Créer un compte</a>
-      <a href="login.html">Connexion</a>
-    </nav>
-  </header>
-  <main>
-    <section class="hero">
-      <h2>Faites des rencontres sérieuses à Kinshasa</h2>
-      <p>Rejoignez la plus grande communauté de célibataires en RDC.</p>
-      <a href="register.html" class="btn">Commencer maintenant</a>
-    </section>
-  </main>
-  <footer>
-    <p>&copy; 2025 Kin Passion Services. Tous droits réservés.</p>
-  </footer>
+<!-- Hearts Animation -->
+<div class="hearts" id="hearts"></div>
+<div class="container">
+<header>
+<div class="logo-container">
+<div class="logo">KINPASSION SERVICES</div>
+</div>
+<div class="tagline">Là où on trouve le plaisir</div>
+</header>
+<main class="content">
+<div class="transparent-card">
+<h2 class="section-title">À propos de notre agence</h2>
+<p class="about-text">Depuis 2023, <span class="highlight">KINPASSION SERVICES</span> redéfinit l'art des se faire plaisir en créant des connexions profondes et authentiques. Notre approche unique combine psychologie, intuition et technologie pour vous aider à trouver la personne qui vous correspond vraiment.</p>
+<p class="about-text">Nous croyons vous mérité mieux, un rencontres spécial est unique, c'est pourquoi nous offrons un service sur mesure adapté à vos attentes et à votre personnalité. Notre équipe d'experts vous accompagne à chaque étape de votre rencontre.</p>
+</div>
+<div class="transparent-card">
+<h2 class="section-title">Notre méthodologie exclusive</h2>
+<div class="features">
+<div class="feature">
+<i class="fas fa-heartbeat"></i>
+<h3>Analyse Personnalisée</h3>
+<p>Un entretien approfondi pour comprendre vos valeurs, aspirations et critères de compatibilité.</p>
+</div>
+<div class="feature">
+<i class="fas fa-search"></i>
+<h3>Sélection Rigoureuse</h3>
+<p>Notre algorithme exclusif sélectionne les profils les plus compatibles avec votre personnalité.</p>
+</div>
+<div class="feature">
+<i class="fas fa-glass-cheers"></i>
+<h3>Rencontres Sur Mesure</h3>
+<p>Organisation de rencontres dans des lieux privilégiés, adaptés à vos goûts et préférences.</p>
+</div>
+</div>
+</div>
+<div class="transparent-card">
+<h2 class="section-title">Nos résultats parlent d'eux-mêmes</h2>
+<div class="stats">
+<div class="stat-item">
+<div class="stat-number">579+</div>
+<div class="stat-label">Rencontres</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">89%</div>
+<div class="stat-label">Satisfaction</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">250+</div>
+<div class="stat-label">Clients fidel</div>
+</div>
+<div class="stat-item">
+<div class="stat-number">3</div>
+<div class="stat-label">Années d'expérience</div>
+</div>
+</div>
+</div>
+<div class="catalogue-section">
+<h2 class="catalogue-title">Vous êtes pret pour avoir du plaisir ?</h2>
+<p class="catalogue-subtitle">Découvrez notre sélection exclusive de filles Belle et Elegante profils triés sur le volet. Des rencontres sûr mesure et authentiques tout dans la Discrétion.</p>
+<div class="catalogue-btn-container">
+<!-- Correction ici : Utilisation d'un lien vers catalogue.html -->
+<a class="catalogue-btn" href="catalogue.html">
+<i class="fas fa-book-open"></i>
+                        Voir le catalogue
+                    </a>
+</div>
+</div>
+</main>
+<footer>
+<div class="contact-info">
+<div class="contact-item">
+<i class="fas fa-map-marker-alt"></i>
+<span>KINPASSION SERVICES, KINSHASA/RDC</span>
+</div>
+<div class="contact-item">
+<i class="fas fa-phone"></i>
+<span>+243 988 347 829</span>
+</div>
+<div class="contact-item">
+<i class="fas fa-envelope"></i>
+<span>kinpassion.cd@gmail.com</span>
+</div>
+</div>
+<p>© 2025 KINPASSION SERVICES - Agence de Rencontres Exclusives. Tous droits réservés.</p>
+</footer>
+</div>
+
 </body>
 </html>
