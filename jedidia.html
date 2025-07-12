@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINPASSION SERVICES</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1a0a2e, #4a154b, #9d2235);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #ff9ec5;
+        }
+
+        .instructions {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            border-left: 4px solid #ff9ec5;
+        }
+
+        .instructions h2 {
+            color: #ff9ec5;
+            margin-bottom: 15px;
+        }
+
+        .instructions ol {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .code-block {
+            background: #1a0a2e;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-family: monospace;
+            border: 1px solid #4a154b;
+            overflow-x: auto;
+        }
+
+        .highlight {
+            background: rgba(157, 34, 53, 0.5);
+            padding: 2px 5px;
+            border-radius: 3px;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 158, 197, 0.3);
+            color: #ff9ec5;
+            border-radius: 50px;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(157, 34, 53, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 30px;
+            max-width: 1400px;
+            margin: 20px auto;
+            border: 3px dashed #ff9ec5;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .photo-container {
+            height: 300px;
+            background-size: cover;
+            background-position: center;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .photo-container:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .photo-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 15px;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .photo-container:hover .photo-overlay {
+            opacity: 1;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+            pointer-events: none;
+            user-select: none;
+            -webkit-user-drag: none;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 1001;
+        }
+
+        .lightbox-close:hover {
+            color: #ff9ec5;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1001;
+        }
+
+        .lightbox-nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .lightbox-nav-btn:hover {
+            background: rgba(157, 34, 53, 0.7);
+            transform: scale(1.1);
+        }
+
+        .lightbox-caption {
+            text-align: center;
+            color: white;
+            padding: 15px;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-top: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1a0a2e;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .photo-container {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .photo-container:nth-child(1) { animation-delay: 0.1s; }
+        .photo-container:nth-child(2) { animation-delay: 0.2s; }
+        .photo-container:nth-child(3) { animation-delay: 0.3s; }
+        .photo-container:nth-child(4) { animation-delay: 0.4s; }
+        .photo-container:nth-child(5) { animation-delay: 0.5s; }
+        .photo-container:nth-child(6) { animation-delay: 0.6s; }
+
+        @media (max-width: 768px) {
+            .gallery-container {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+            
+            .photo-container {
+                height: 250px;
+            }
+            
+            .lightbox-nav-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+            
+            .lightbox-close {
+                top: 10px;
+                right: 15px;
+                font-size: 30px;
+            }
+        }
+
+        .container-highlight {
+            position: relative;
+        }
+
+        .container-highlight::before {
+            content: "JEDIDIA";
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff9ec5;
+            color: #1a0a2e;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 10;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+
+    <a class="back-btn" href="kinshasa.html">
+        <i class="fas fa-arrow-left"></i>
+        Retour
+    </a>
+
+    <header>
+        <h1>KINPASSION SERVICES</h1>
+        <p> 20 ans, Lemba </p>
+    </header>
+
+   
+    <div class="container-highlight">
+        <main class="gallery-container">
+            <div class="photo-container" 
+                 style="background-image: url('jedidia/photo1.jpg');" 
+                 data-src="jedidia/photo1.jpg" 
+                 data-caption="JEDIDIA">
+                <div class="photo-overlay">
+
+                </div>
+            </div>
+
+            <div class="photo-container" 
+                 style="background-image: url('jedidia/photo2.jpg');" 
+                 data-src="jedidia/photo2.jpg" 
+                 data-caption="JEDIDIA">
+                <div class="photo-overlay">
+
+                </div>
+            </div>
+
+            <div class="photo-container" 
+                 style="background-image: url('jedidia/photo3.jpg');" 
+                 data-src="jedidia/photo3.jpg" 
+                 data-caption="JEDIDIA">
+                <div class="photo-overlay">
+
+                </div>
+            </div>
+
+            <div class="photo-container" 
+                 style="background-image: url('jedidia/photo4.jpg');" 
+                 data-src="jedidia/photo4.jpg" 
+                 data-caption="JEDIDIA">
+                <div class="photo-overlay">
+
+                </div>
+            </div>
+  
+            <div class="photo-container" 
+                 style="background-image: url('jedidia/photo5.jpg');" 
+                 data-src="jedidia/photo5.jpg" 
+                 data-caption="JEDIDIA">
+                <div class="photo-overlay">
+
+                </div>
+ </div>
+            <!-- EXEMPLE DE NOUVELLE PHOTO -->
+            <div class="photo-container" 
+                 style="background-image: url('jedidia/photo6.jpg');" 
+                 data-src="jedidia/photo6.jpg" 
+                 data-caption="JEDIDIA">
+                <div class="photo-overlay">
+
+                </div>
+
+            </div>
+
+            <div class="photo-container" 
+                 style="background-image: url('jedidia/photo7.jpg');" 
+                 data-src="jedidia/photo7.jpg" 
+                 data-caption="JEDIDIA">
+                <div class="photo-overlay">
+
+                </div>
+
+             </div>
+
+            <div class="photo-container" 
+                 style="background-image: url('jedidia/photo8.jpg');" 
+                 data-src="jedidia/photo8.jpg" 
+                 data-caption="JEDIDIA">
+                <div class="photo-overlay">
+
+                </div>
+        </div>
+
+             <div class="photo-container" 
+                 style="background-image: url('jedidia/photo9.jpg');" 
+                 data-src="jedidia/photo9.jpg" 
+                 data-caption="JEDIDIA">
+                <div class="photo-overlay">
+
+                </div>
+                
+            </div>
+            </div>
+        </main>
+    </div>
+
+
+    <footer>
+        <p>© 2025 KINPASSION SERVICES - Tous droits réservés.</p>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <div class="lightbox-content">
+            <img class="lightbox-img" id="lightboxImg" src="" alt="Photo en grand format">
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+        <div class="lightbox-nav">
+            <button class="lightbox-nav-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+            <button class="lightbox-nav-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        const photoContainers = document.querySelectorAll('.photo-container');
+        let currentIndex = 0;
+        
+        photoContainers.forEach((container, index) => {
+            container.addEventListener('click', () => {
+                openLightbox(index);
+            });
+        });
+        
+        function openLightbox(index) {
+            currentIndex = index;
+            const photo = photoContainers[index];
+            const fullSrc = photo.getAttribute('data-src');
+            const caption = photo.getAttribute('data-caption');
+            
+            lightboxImg.src = fullSrc;
+            lightboxCaption.textContent = caption;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        function showPrevImage() {
+            currentIndex = (currentIndex - 1 + photoContainers.length) % photoContainers.length;
+            openLightbox(currentIndex);
+        }
+        
+        function showNextImage() {
+            currentIndex = (currentIndex + 1) % photoContainers.length;
+            openLightbox(currentIndex);
+        }
+        
+        lightboxClose.addEventListener('click', closeLightbox);
+        prevBtn.addEventListener('click', showPrevImage);
+        nextBtn.addEventListener('click', showNextImage);
+        
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevImage();
+                } else if (e.key === 'ArrowRight') {
+                    showNextImage();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

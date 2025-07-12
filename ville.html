@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Choisissez votre ville - KINPASSION SERVICES</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;family=Playfair+Display:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1a0a2e, #4a154b, #9d2235);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 158, 197, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Titre principal */
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            text-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 10px;
+        }
+
+        .page-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #ff69b4, transparent);
+        }
+
+        /* Sous-titre */
+        .page-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-top: 10px;
+            margin-bottom: 50px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Conteneur pour les boutons */
+        .city-selection-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+        }
+
+        /* Style des boutons de ville */
+        .city-btn {
+            display: block;
+            width: 80%;
+            max-width: 350px;
+            padding: 15px 20px;
+            text-decoration: none;
+            color: #ff9ec5;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 158, 197, 0.3);
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .city-btn:hover {
+            background: rgba(157, 34, 53, 0.4);
+            transform: scale(1.05);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 105, 180, 0.5);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.8rem;
+            }
+            .page-subtitle {
+                font-size: 1rem;
+            }
+            .city-btn {
+                font-size: 1.1rem;
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="page-title">Ville</h1>
+    <p class="page-subtitle">Choisissez votre ville</p>
+
+    <div class="city-selection-container">
+        <a href="kinshasa.html" class="city-btn">Kinshasa</a>
+        <a href="#" class="city-btn">Lubumbashi</a>
+        <a href="#" class="city-btn">Matadi</a>
+    </div>
+</div>
+
+</body>
+</html>

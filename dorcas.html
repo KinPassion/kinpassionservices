@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KINPASSION SERVICES - DORCAS</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #1a0a2e, #4a154b, #9d2235);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #fff;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            text-align: center;
+            padding: 30px;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #ff9ec5;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 158, 197, 0.3);
+            color: #ff9ec5;
+            border-radius: 50px;
+            padding: 10px 20px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .back-btn:hover {
+            background: rgba(157, 34, 53, 0.3);
+            transform: translateX(-5px);
+        }
+
+        .gallery-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            padding: 30px;
+            max-width: 1400px;
+            margin: 20px auto;
+            border: 3px dashed #ff9ec5;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        .media-container {
+            height: 300px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .media-container:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        .photo-container {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .video-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .video-thumbnail {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: rgba(255, 255, 255, 0.8);
+            background: rgba(0, 0, 0, 0.5);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            transition: all 0.3s;
+        }
+
+        .media-container:hover .play-icon {
+            background: rgba(255, 158, 197, 0.7);
+            color: white;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .media-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            padding: 15px;
+            color: white;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .media-container:hover .media-overlay {
+            opacity: 1;
+        }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox-content {
+            position: relative;
+            max-width: 90%;
+            max-height: 90%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .lightbox-img {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .lightbox-video {
+            max-width: 90%;
+            max-height: 80vh;
+            display: block;
+            border-radius: 10px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 40px;
+            cursor: pointer;
+            transition: color 0.3s;
+            z-index: 1001;
+        }
+
+        .lightbox-close:hover {
+            color: #ff9ec5;
+        }
+
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 1001;
+        }
+
+        .lightbox-nav-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .lightbox-nav-btn:hover {
+            background: rgba(157, 34, 53, 0.7);
+            transform: scale(1.1);
+        }
+
+        .lightbox-caption {
+            text-align: center;
+            color: white;
+            padding: 15px;
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-top: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1a0a2e;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .media-container {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        .media-container:nth-child(1) { animation-delay: 0.1s; }
+        .media-container:nth-child(2) { animation-delay: 0.2s; }
+        .media-container:nth-child(3) { animation-delay: 0.3s; }
+        .media-container:nth-child(4) { animation-delay: 0.4s; }
+        .media-container:nth-child(5) { animation-delay: 0.5s; }
+        .media-container:nth-child(6) { animation-delay: 0.6s; }
+
+        @media (max-width: 768px) {
+            .gallery-container {
+                grid-template-columns: 1fr;
+                padding: 15px;
+            }
+            
+            .media-container {
+                height: 250px;
+            }
+            
+            .lightbox-nav-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
+            
+            .lightbox-close {
+                top: 10px;
+                right: 15px;
+                font-size: 30px;
+            }
+        }
+
+        .container-highlight {
+            position: relative;
+        }
+
+        .container-highlight::before {
+            content: "DORCAS";
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #ff9ec5;
+            color: #1a0a2e;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            z-index: 10;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+
+    <a class="back-btn" href="kinshasa.html">
+        <i class="fas fa-arrow-left"></i>
+        Retour
+    </a>
+
+    <header>
+        <h1>KINPASSION SERVICES</h1>
+        <p>20 ans, Kalamu</p>
+    </header>
+
+    <div class="container-highlight">
+        <main class="gallery-container">
+            <!-- Conteneur vidéo -->
+            <div class="media-container video-item" 
+                 data-src="dorcas/video1.mp4" 
+                 data-caption="DORCAS - Vidéo de présentation">
+                <div class="video-container">
+                    <img src="dorcas/video1.mp4" alt="Miniature vidéo" class="video-thumbnail">
+                    <div class="play-icon">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="media-overlay">
+                    <p>Cliquez pour voir la vidéo</p>
+                </div>
+            </div>
+
+            <!-- Conteneurs images -->
+            <div class="media-container" 
+                 data-src="dorscas/photo1.jpg" 
+                 data-caption="DORCAS - Photo 1">
+                <div class="photo-container" style="background-image: url('dorcas/photo1.jpg');"></div>
+                <div class="media-overlay">
+                    <p>Photo de DORCAS</p>
+                </div>
+            </div>
+
+            <div class="media-container" 
+                 data-src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000" 
+                 data-caption="DORCAS - Photo 2">
+                <div class="photo-container" style="background-image: url('https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1000');"></div>
+                <div class="media-overlay">
+                    <p>Photo de DORCAS</p>
+                </div>
+            </div>
+
+            <div class="media-container" 
+                 data-src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000" 
+                 data-caption="DORCAS - Photo 3">
+                <div class="photo-container" style="background-image: url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=1000');"></div>
+                <div class="media-overlay">
+                    <p>Photo de DORCAS</p>
+                </div>
+            </div>
+  
+            <div class="media-container" 
+                 data-src="https://images.unsplash.com/photo-1567532939604-b6b5b0e1607d?q=80&w=1000" 
+                 data-caption="DORCAS - Photo 4">
+                <div class="photo-container" style="background-image: url('https://images.unsplash.com/photo-1567532939604-b6b5b0e1607d?q=80&w=1000');"></div>
+                <div class="media-overlay">
+                    <p>Photo de DORCAS</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        <p>© 2025 KINPASSION SERVICES - Tous droits réservés.</p>
+    </footer>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <span class="lightbox-close" id="lightboxClose">&times;</span>
+        <div class="lightbox-content">
+            <img class="lightbox-img" id="lightboxImg" src="" alt="Photo en grand format" style="display: none;">
+            <video class="lightbox-video" id="lightboxVideo" controls style="display: none;"></video>
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+        <div class="lightbox-nav">
+            <button class="lightbox-nav-btn" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+            <button class="lightbox-nav-btn" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        </div>
+    </div>
+
+    <script>
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightboxImg');
+        const lightboxVideo = document.getElementById('lightboxVideo');
+        const lightboxCaption = document.getElementById('lightboxCaption');
+        const lightboxClose = document.getElementById('lightboxClose');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        const mediaContainers = document.querySelectorAll('.media-container');
+        let currentIndex = 0;
+        
+        mediaContainers.forEach((container, index) => {
+            container.addEventListener('click', () => {
+                openLightbox(index);
+            });
+        });
+        
+        function openLightbox(index) {
+            currentIndex = index;
+            const media = mediaContainers[index];
+            const fullSrc = media.getAttribute('data-src');
+            const caption = media.getAttribute('data-caption');
+            
+            // Vérifier si c'est une vidéo
+            const isVideo = media.classList.contains('video-item');
+            
+            // Masquer tous les éléments du lightbox
+            lightboxImg.style.display = 'none';
+            lightboxVideo.style.display = 'none';
+            lightboxVideo.pause();
+            lightboxVideo.removeAttribute('src');
+            
+            if (isVideo) {
+                // Afficher la vidéo
+                lightboxVideo.style.display = 'block';
+                lightboxVideo.src = fullSrc;
+                lightboxVideo.setAttribute('controls', 'true');
+            } else {
+                // Afficher l'image
+                lightboxImg.style.display = 'block';
+                lightboxImg.src = fullSrc;
+            }
+            
+            lightboxCaption.textContent = caption;
+            lightbox.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeLightbox() {
+            lightbox.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            // Arrêter la vidéo si elle est en cours
+            lightboxVideo.pause();
+        }
+        
+        function showPrevMedia() {
+            currentIndex = (currentIndex - 1 + mediaContainers.length) % mediaContainers.length;
+            openLightbox(currentIndex);
+        }
+        
+        function showNextMedia() {
+            currentIndex = (currentIndex + 1) % mediaContainers.length;
+            openLightbox(currentIndex);
+        }
+        
+        lightboxClose.addEventListener('click', closeLightbox);
+        prevBtn.addEventListener('click', showPrevMedia);
+        nextBtn.addEventListener('click', showNextMedia);
+        
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+        
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('active')) {
+                if (e.key === 'Escape') {
+                    closeLightbox();
+                } else if (e.key === 'ArrowLeft') {
+                    showPrevMedia();
+                } else if (e.key === 'ArrowRight') {
+                    showNextMedia();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
